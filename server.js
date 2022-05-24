@@ -5,12 +5,12 @@ const app = express();
 const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
+app.use('./apiRoutes', apiRoutes);
+app.use('./htmlRoutes', htmlRoutes);
 
 app.listen(process.env.PORT || 3000, function(){
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
