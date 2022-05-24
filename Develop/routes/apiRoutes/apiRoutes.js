@@ -1,38 +1,52 @@
 const router = require('express').Router();
-const {
-  filterByQuery,
-  findById,
-  createNewZookeeper,
-  validateZookeeper
-} = require('../../lib/zookeepers');
-const { zookeepers } = require('../../data/zookeepers');
+const fs = require('fs');
+const path = require('path');
+const notes = require('../db/db.json');
 
-router.get('/zookeepers', (req, res) => {
-  let results = zookeepers;
-  if (req.query) {
-    results = filterByQuery(req.query, results);
-  }
-  res.json(results);
+function createNewNote(newNote) {
+    notes.push(newNote);
+    updateDataBase()
+}
+
+router.post('/notes', (req, res) => {
+    createNewNote(req.body);
+    console.log(notes);
+    res.json(notes);
 });
 
-router.get('/zookeepers/:id', (req, res) => {
-  const result = findById(req.params.id, zookeepers);
-  if (result) {
-    res.json(result);
-  } else {
-    res.send(404);
-  }
+function findById(id, notesArray) {
+    const result = notesArray.filter(notes => notes.id === id)[0];
+    return result;
+}
+
+function updateDataBase() {
+    const pathToFile = path.resolve(__dirname, '../db/db.json');
+    const data = JSON.stringify(notes);
+    const callback = err => err ? console.error(err) : false;
+    fs.writeFile(pathToFile, data, options, callback);
+}
+
+router.get('/notes', (req, res) => {
+    res.json(notes);
 });
 
-router.post('/zookeepers', (req, res) => {
-  req.body.id = zookeepers.length.toString();
+router.get('/notes/:id', (req, res) => {
+    const result = findById(req.params.id, notes);
+    if (result) {
+        res.json(result);
+    } else {
+        res.send(404);
+    }
+});
 
-  if (!validateZookeeper(req.body)) {
-    res.status(400).send('The zookeeper is not properly formatted.');
-  } else {
-    const zookeeper = createNewZookeeper(req.body, zookeepers);
-    res.json(zookeeper);
-  }
+router.delete('/notes/:id', (req, res) => {
+    req.params.id
+    notes.forEach((note, currIndex, arr) => {
+        if (note.id === req.params.id) {
+            arr.splice(currIndex, 1);
+        }
+    })
+    updateDataBase();
 });
 
 module.exports = router;
