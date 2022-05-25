@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
-const notes = require('../db/db.json');
+const notes = require('/db/db.json');
 
 function createNewNote(newNote) {
     notes.push(newNote);
     updateDataBase()
 }
 
-router.post('./notes.html', (req, res) => {
+router.post('/public/notes.html', (req, res) => {
     createNewNote(req.body);
     console.log(notes);
     res.json(notes);
@@ -20,17 +20,17 @@ function findById(id, notesArray) {
 }
 
 function updateDataBase() {
-    const pathToFile = path.resolve(__dirname, '../db/db.json');
+    const pathToFile = path.resolve(__dirname, '/db/db.json');
     const data = JSON.stringify(notes);
     const callback = err => err ? console.error(err) : false;
     fs.writeFile(pathToFile, data, options, callback);
 }
 
-router.get('./notes.html', (req, res) => {
+router.get('/public/notes.html.html', (req, res) => {
     res.json(notes);
 });
 
-router.get('./notes.html/:id', (req, res) => {
+router.get('/public/notes.html/:id', (req, res) => {
     const result = findById(req.params.id, notes);
     if (result) {
         res.json(result);
@@ -39,7 +39,7 @@ router.get('./notes.html/:id', (req, res) => {
     }
 });
 
-router.delete('/notes.html/:id', (req, res) => {
+router.delete('/public/notes.html/:id', (req, res) => {
     req.params.id
     notes.forEach((note, currIndex, arr) => {
         if (note.id === req.params.id) {
