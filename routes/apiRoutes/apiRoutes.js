@@ -26,7 +26,7 @@ function updateDataBase() {
     fs.writeFile(pathToFile, data, options, callback);
 }
 
-router.get('/public/notes.html.html', (req, res) => {
+router.get('/public/notes.html', (req, res) => {
     res.json(notes);
 });
 

@@ -2,8 +2,8 @@ const express = require('express');
 const port = process.env.PORT || 3001
 const app = express();
 
-const apiRoutes = require('/apiRoutes');
-const htmlRoutes = require('/htmlRoutes');
+const apiRoutes = require('/apiRoutes.js');
+const htmlRoutes = require('/htmlRoutes.js');
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
