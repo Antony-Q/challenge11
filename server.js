@@ -2,16 +2,16 @@ const express = require('express');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const apiRoutes = require('./Develop/routes/apiRoutes');
-const htmlRoutes = require('./Develop/routes/htmlRoutes');
+const apiRoutes = require('./routes/apiRoutes.js');
+const htmlRoutes = require('./routes/htmlRoutes.js');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use('./Develop/routes/apiRoutes', apiRoutes);
-app.use('./Develop/routes/htmlRoutes', htmlRoutes);
+app.use('./apiRoutes.js', apiRoutes);
+app.use('./htmlRoutes.js', htmlRoutes);
 
-app.listen(process.env.PORT || 3000, function(){
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-  });
+app.listen(PORT, () => {
+  console.log(`API server now on port ${PORT}!`);
+});
