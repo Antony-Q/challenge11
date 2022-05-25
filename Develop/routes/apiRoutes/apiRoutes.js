@@ -8,7 +8,7 @@ function createNewNote(newNote) {
     updateDataBase()
 }
 
-router.post('/notes', (req, res) => {
+router.post('./notes.html', (req, res) => {
     createNewNote(req.body);
     console.log(notes);
     res.json(notes);
@@ -26,11 +26,11 @@ function updateDataBase() {
     fs.writeFile(pathToFile, data, options, callback);
 }
 
-router.get('/notes', (req, res) => {
+router.get('./notes.html', (req, res) => {
     res.json(notes);
 });
 
-router.get('/notes/:id', (req, res) => {
+router.get('./notes.html/:id', (req, res) => {
     const result = findById(req.params.id, notes);
     if (result) {
         res.json(result);
@@ -39,7 +39,7 @@ router.get('/notes/:id', (req, res) => {
     }
 });
 
-router.delete('/notes/:id', (req, res) => {
+router.delete('/notes.html/:id', (req, res) => {
     req.params.id
     notes.forEach((note, currIndex, arr) => {
         if (note.id === req.params.id) {
