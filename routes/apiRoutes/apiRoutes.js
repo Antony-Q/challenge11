@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
-const notes = require('/db/db.json');
+const notes = require('../../db/db.json');
 
 function createNewNote(newNote) {
     notes.push(newNote);
@@ -20,7 +20,7 @@ function findById(id, notesArray) {
 }
 
 function updateDataBase() {
-    const pathToFile = path.resolve(__dirname, '/db/db.json');
+    const pathToFile = path.resolve(__dirname, '../..//db/db.json');
     const data = JSON.stringify(notes);
     const callback = err => err ? console.error(err) : false;
     fs.writeFile(pathToFile, data, options, callback);
